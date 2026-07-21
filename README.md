@@ -1,16 +1,16 @@
 # 📚 CEI Assignments & Projects
 
-Welcome to the **CEI Assignments** repository! This project chronicles a week-by-week journey through various concepts in Machine Learning, Data Science, and Artificial Intelligence, culminating in a full-stack, production-ready AI application.
+Welcome to the **CEI Assignments** repository! This chronicles an 8-week journey through Machine Learning and Data Science concepts, culminating in a full-stack AI capstone project.
 
 ## 🗂️ Repository Structure
 
-The repository is organized chronologically by week, containing Jupyter notebooks and datasets for weekly assignments, alongside the final capstone project.
+The repository contains week-by-week Jupyter notebooks and the final capstone project.
 
 ### 📅 Week-Wise Progress
 
 - **[Week 1](./week1_Anumalla_Rachith.ipynb)**
   - Introduction and fundamental concepts.
-  - Contains foundational exercises in data manipulation and basic modeling.
+  - Foundational exercises in data manipulation and basic modeling.
 
 - **[Week 2](./Week2/)**
   - **Topics:** Exploratory Data Analysis (EDA) and Visualization.
@@ -31,7 +31,7 @@ The repository is organized chronologically by week, containing Jupyter notebook
   - **Notebook:** `Week_5-CIE_Rachith.ipynb`
 
 - **[Week 6](./Week6/)**
-  - **Topics:** Deep Learning Basics, Neural Networks, or NLP.
+  - **Topics:** Deep Learning Basics and Neural Networks.
   - **Notebook:** `Week_6_CIE_Rachith.ipynb`
 
 - **[Week 7](./Week7/)**
@@ -46,25 +46,33 @@ The repository is organized chronologically by week, containing Jupyter notebook
 
 ## 🧩 Capstone Project: SmartRag
 
-**[SmartRag](./SmartRag/)** — *Production-Ready AI Research Assistant*
+**[SmartRag](./SmartRag/)** — *AI Research Assistant using RAG*
 
-A modular, non-hallucinating Retrieval-Augmented Generation (RAG) application built with **Python 3.12+, Streamlit, LangChain, FAISS/ChromaDB, and RAGAS**.
+A simple, beginner-friendly **Retrieval-Augmented Generation (RAG)** application built with Python, Streamlit, LangChain, ChromaDB, and OpenRouter.
 
-### 🌟 Highlights
-- **Strictly Grounded:** System is engineered to prevent hallucinations by relying only on retrieved context.
-- **Multi-Format Ingestion:** Supports PDFs, plain text, Markdown, and live Web URLs.
-- **Verifiable Citations:** Every AI response provides expandable source cards showing exact document, page number, and similarity score.
-- **Pluggable Vector Databases:** Supports both FAISS (local, fast) and ChromaDB (persistent).
-- **Multi-Provider LLMs:** Switch seamlessly between OpenAI, Google Gemini, and OpenRouter directly from the UI.
-- **Live RAGAS Evaluation:** Automatically computes Faithfulness, Answer Relevancy, Context Precision, and Context Recall.
+### 🌟 What it does
+- Upload **PDF or TXT** documents into a local vector database
+- Ask questions about your documents in a chat interface
+- Receive answers that are **strictly grounded** in the uploaded content — no hallucinations
+- View the exact source passages the AI used to form its answer
 
-🔗 **Live Demo:** [https://smartrag-wpgkkczwcx8ov9zpnjyl9s.streamlit.app/](https://smartrag-wpgkkczwcx8ov9zpnjyl9s.streamlit.app/)
+### 🔧 Tech Stack
+| Component | Technology |
+|-----------|-----------|
+| UI | Streamlit |
+| Document Loading & Chunking | LangChain |
+| Embeddings | HuggingFace `all-MiniLM-L6-v2` (local, free) |
+| Vector Database | ChromaDB (persistent, on-disk) |
+| LLM | OpenRouter (free-tier models) |
 
-For detailed instructions on running **SmartRag** locally, please refer to the [SmartRag README](./SmartRag/README.md).
+### 🗂️ Architecture
+The entire backend is consolidated into a single, readable file — `rag_pipeline.py` — making it easy to understand every step of the RAG process.
+
+For detailed setup instructions, see the [SmartRag README](./SmartRag/README.md).
 
 ---
 
 ## 👨‍💻 Author
 **Rachith Anumalla**
 
-*This repository represents coursework and projects completed as part of the CEI program.*
+*Coursework and projects completed as part of the CEI Data Science Internship Program.*

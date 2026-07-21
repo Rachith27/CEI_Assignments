@@ -1,54 +1,92 @@
 # 🧩 SmartRag — Simple AI Research Assistant
 
-A straightforward, beginner-friendly Retrieval-Augmented Generation (RAG) application built with Python, Streamlit, LangChain, ChromaDB, and OpenAI.
+A beginner-friendly **Retrieval-Augmented Generation (RAG)** application built with Python, Streamlit, LangChain, ChromaDB, and OpenRouter.
 
-This project allows users to upload PDF and TXT files, process them into a local vector database, and ask questions about them. Answers are strictly grounded in the provided documents to prevent AI hallucinations.
+Upload PDF or TXT files, ask questions about them, and get answers that are strictly grounded in your documents — no hallucinations.
 
 ---
 
 ## 📂 Project Structure
 
-We intentionally keep this project as simple as possible. All logic lives in just two files:
+The project is intentionally kept simple — all logic lives in just **two files**:
 
-- `app.py`: The frontend UI built with Streamlit. Handles file uploads and the chat interface.
-- `rag_pipeline.py`: The backend logic. Handles document chunking, embeddings, ChromaDB storage, and OpenAI LLM generation.
-- `requirements.txt`: The Python dependencies needed to run the app.
-- `.env`: Where you store your API keys.
+```
+SmartRag/
+├── app.py              # Streamlit UI — file uploads + chat interface
+├── rag_pipeline.py     # All RAG logic — load, chunk, embed, store, query
+├── requirements.txt    # Python dependencies
+├── .env                # Your API keys (never committed to Git)
+└── .streamlit/
+    └── config.toml     # Streamlit server configuration
+```
 
 ---
 
-## 🛠️ Installation
+## 🛠️ Setup & Installation
 
 ### 1. Prerequisites
-Ensure you have **Python 3.10+** installed.
+Python **3.10+** required (tested on 3.14).
 
-### 2. Install Dependencies
+### 2. Create a Virtual Environment
+```bash
+python -m venv venv
+.\venv\Scripts\activate   # Windows
+source venv/bin/activate  # Mac/Linux
+```
+
+### 3. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Setup Environment Variables
-Create a `.env` file in the root directory (or use the existing `.env.example` as a template) and add your OpenAI API key:
+### 4. Configure API Keys
+Create a `.env` file in the `SmartRag/` directory:
 ```ini
-OPENAI_API_KEY=your_openai_api_key_here
+OPENROUTER_API_KEY=your_openrouter_api_key_here
 ```
+> Get a free key at [openrouter.ai](https://openrouter.ai). No billing required for free-tier models.
 
 ---
 
 ## 🚀 Running the App
 
-Launch the Streamlit application locally:
 ```bash
 streamlit run app.py
 ```
-The application will open automatically in your default web browser at `http://localhost:8501`.
+
+The app opens at `http://localhost:8501`.
 
 ---
 
-## 🧠 How it Works (RAG Pipeline)
+## 🧠 How the RAG Pipeline Works
 
-1. **Ingestion**: When you upload a document, `rag_pipeline.py` splits it into chunks of 800 characters.
-2. **Embedding**: We use a local HuggingFace model (`sentence-transformers/all-MiniLM-L6-v2`) to turn these chunks into math vectors.
-3. **Storage**: The vectors are saved persistently on your hard drive using **ChromaDB**.
-4. **Retrieval**: When you ask a question, we find the 4 most mathematically similar chunks to your question.
-5. **Generation**: We send those 4 chunks to **OpenAI (gpt-4o-mini)** with a strict instruction to *only* answer using the provided text.
+This is the core concept of the project — **Retrieval-Augmented Generation**:
+
+| Step | What Happens | Code Location |
+|------|-------------|---------------|
+| **1. Load** | PDF/TXT file is read from disk | `PyPDFLoader` / `TextLoader` |
+| **2. Chunk** | Document split into 800-character overlapping pieces | `RecursiveCharacterTextSplitter` |
+| **3. Embed** | Each chunk converted to a math vector (list of numbers) | `HuggingFaceEmbeddings` (local, no API needed) |
+| **4. Store** | Vectors saved to disk in ChromaDB | `chromadb.PersistentClient` |
+| **5. Retrieve** | User's question embedded → 4 most similar chunks found | Cosine similarity search |
+| **6. Generate** | Chunks + question sent to LLM → answer produced | OpenRouter `gpt-oss-20b:free` |
+
+### Why RAG?
+Instead of asking a generic AI that might guess or hallucinate, RAG makes the AI read *your* specific documents first and only answer based on what's in them.
+
+---
+
+## 🔑 Key Technologies
+
+| Library | Purpose |
+|---------|---------|
+| `streamlit` | Web UI framework |
+| `langchain` | Document loading, chunking, prompt building |
+| `sentence-transformers` | Local embedding model (runs on your CPU, free) |
+| `chromadb` | Local vector database for storing embeddings |
+| `langchain-openai` | LLM client (used to connect to OpenRouter) |
+
+---
+
+## 👨‍💻 Author
+**Rachith Anumalla** — CEI Data Science Internship Capstone Project
